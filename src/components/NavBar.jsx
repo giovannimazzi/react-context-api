@@ -26,6 +26,7 @@ export default function Navbar() {
         <button
           className={`btn ms-2 ${!budgetMode ? "btn-dark" : "btn-info"}`}
           onClick={() => toggleBudgetMode()}
+          disabled={maxPrice === null && !budgetMode ? true : false}
         >
           {(budgetMode ? "Disattiva" : "Attiva") + " Modalità Budget"}
         </button>
