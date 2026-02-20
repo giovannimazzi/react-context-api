@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import NavBar from "../components/NavBar";
+import Navbar from "../components/Navbar";
 
 export default function DefaultLayout() {
   return (
     <>
-      <NavBar />
+      <Navbar />
       <div className="container p-5 text-center">
         <Outlet />
       </div>

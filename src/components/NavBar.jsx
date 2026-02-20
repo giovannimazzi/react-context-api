@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-export default function NavBar() {
+export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
