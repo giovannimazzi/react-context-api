@@ -11,7 +11,7 @@ export default function Navbar() {
           🛒React Router Store
         </NavLink>
         <button
-          className="btn btn-dark ms-5"
+          className="btn btn-info ms-5"
           onClick={() => toggleBudgetMode()}
         >
           {(budgetMode ? "Disattiva" : "Attiva") + " Modalità Budget"}
