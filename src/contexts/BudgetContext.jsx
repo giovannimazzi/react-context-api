@@ -7,20 +7,23 @@ const BudgetContext = createContext();
 function BudgetProvider({ children }) {
   const [budgetMode, setBudgetMode] = useState(false);
 
-  /* const changeBudgetMode = (mode) => {
-    typeof mode === "boolean"
-      ? setBudgetMode(mode)
-      : console.log(
-          `Errore richiesta changeBudgetMode con argomento: ${mode} di tipo ${typeof mode}. L'argomento deve essere booleano.`,
-        );
-  }; */
+  const [maxPrice, setMaxPrice] = useState(null);
 
   const toggleBudgetMode = () => {
     setBudgetMode(!budgetMode);
   };
 
+  const changeMaxPrice = (newPrice) => {
+    if (newPrice) setMaxPrice(Math.abs(Number(newPrice)));
+  };
+
   //non esporto direttamente il setter, ma una funzione che lo utilizza internamente
-  const contextValue = { budgetMode, toggleBudgetMode };
+  const contextValue = {
+    budgetMode,
+    toggleBudgetMode,
+    maxPrice,
+    changeMaxPrice,
+  };
 
   return (
     <BudgetContext.Provider value={contextValue}>

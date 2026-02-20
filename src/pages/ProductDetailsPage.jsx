@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IoIosArrowDropleft } from "react-icons/io";
 import { IoIosArrowDropright } from "react-icons/io";
+import { useBudget } from "../contexts/BudgetContext";
 
 const productsApiUrl = "https://fakestoreapi.com/products";
 const productApiUrl = "https://fakestoreapi.com/products/:id";
@@ -18,9 +19,11 @@ export default function ProductDetailsPage() {
 
   const navigate = useNavigate();
 
+  const { budgetMode, maxPrice } = useBudget();
+
   useEffect(() => {
     getProductData();
-  }, [id]);
+  }, [id, budgetMode, maxPrice]);
 
   const getProductData = () => {
     setLoading(true);
@@ -29,7 +32,11 @@ export default function ProductDetailsPage() {
     axios
       .get(productApiUrl.replace(":id", id))
       .then((res) => {
-        setProduct(res.data);
+        if (budgetMode && res.data.price > maxPrice) {
+          navigate("/products");
+        } else {
+          setProduct(res.data);
+        }
         if (!res.data?.id) {
           navigate("/products");
         } else {
@@ -47,7 +54,11 @@ export default function ProductDetailsPage() {
       .get(productsApiUrl)
       .then((res) => {
         const currentId = Number(id);
-        const idsArray = res.data.map((p) => p.id);
+        const idsArray = (
+          maxPrice === null || !budgetMode
+            ? res.data
+            : res.data.filter((p) => Number(p.price) <= maxPrice)
+        ).map((p) => p.id);
         const idIndex = idsArray.indexOf(currentId);
         let prevId;
         let nextId;

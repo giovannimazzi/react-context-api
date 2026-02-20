@@ -8,18 +8,20 @@ const productsApiUrl = "https://fakestoreapi.com/products";
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
 
-  const { budgetMode } = useBudget();
+  const { budgetMode, maxPrice } = useBudget();
 
   useEffect(() => {
     axios
       .get(productsApiUrl)
       .then((res) => {
-        budgetMode
-          ? setProducts(res.data.filter((p) => Number(p.price) <= 30))
-          : setProducts(res.data);
+        setProducts(
+          maxPrice === null || !budgetMode
+            ? res.data
+            : res.data.filter((p) => Number(p.price) <= maxPrice),
+        );
       })
       .catch((e) => alert("ERRORE richiesta API: \n\n" + e.message));
-  }, [budgetMode]);
+  }, [budgetMode, maxPrice]);
 
   return (
     <>

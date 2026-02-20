@@ -2,7 +2,8 @@ import { NavLink } from "react-router-dom";
 import { useBudget } from "../contexts/BudgetContext";
 
 export default function Navbar() {
-  const { budgetMode, toggleBudgetMode } = useBudget();
+  const { budgetMode, toggleBudgetMode, maxPrice, changeMaxPrice } =
+    useBudget();
 
   return (
     <nav className="navbar navbar-expand-lg bg-light">
@@ -10,8 +11,20 @@ export default function Navbar() {
         <NavLink to="/" className="navbar-brand text-primary">
           🛒React Router Store
         </NavLink>
+        <div className="d-flex justify-content-center align-items-baseline gap-1 ms-5">
+          <span>€</span>
+          <input
+            id="maxPrice"
+            name="maxPrice"
+            type="number"
+            className="form-control"
+            placeholder="Max Price..."
+            value={maxPrice}
+            onChange={(e) => changeMaxPrice(e.target.value)}
+          />
+        </div>
         <button
-          className={`btn ms-5 ${!budgetMode ? "btn-dark" : "btn-info"}`}
+          className={`btn ms-2 ${!budgetMode ? "btn-dark" : "btn-info"}`}
           onClick={() => toggleBudgetMode()}
         >
           {(budgetMode ? "Disattiva" : "Attiva") + " Modalità Budget"}
