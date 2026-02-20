@@ -7,16 +7,20 @@ const BudgetContext = createContext();
 function BudgetProvider({ children }) {
   const [budgetMode, setBudgetMode] = useState(false);
 
-  const changeBudgetMode = (mode) => {
+  /* const changeBudgetMode = (mode) => {
     typeof mode === "boolean"
       ? setBudgetMode(mode)
       : console.log(
           `Errore richiesta changeBudgetMode con argomento: ${mode} di tipo ${typeof mode}. L'argomento deve essere booleano.`,
         );
+  }; */
+
+  const toggleBudgetMode = () => {
+    setBudgetMode(!budgetMode);
   };
 
-  //non esporto direttamente il setter, ma una funzione che lo utilizza internamente in modo protetto
-  const contextValue = { budgetMode, changeBudgetMode };
+  //non esporto direttamente il setter, ma una funzione che lo utilizza internamente
+  const contextValue = { budgetMode, toggleBudgetMode };
 
   return (
     <BudgetContext.Provider value={contextValue}>

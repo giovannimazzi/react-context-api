@@ -1,12 +1,21 @@
 import { NavLink } from "react-router-dom";
+import { useBudget } from "../contexts/BudgetContext";
 
 export default function Navbar() {
+  const { budgetMode, toggleBudgetMode } = useBudget();
+
   return (
     <nav className="navbar navbar-expand-lg bg-light">
       <div className="container-fluid">
         <NavLink to="/" className="navbar-brand text-primary">
           🛒React Router Store
         </NavLink>
+        <button
+          className="btn btn-dark ms-5"
+          onClick={() => toggleBudgetMode()}
+        >
+          {(budgetMode ? "Disattiva" : "Attiva") + " Modalità Budget"}
+        </button>
         <button
           className="navbar-toggler"
           type="button"
